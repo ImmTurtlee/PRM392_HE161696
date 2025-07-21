@@ -26,6 +26,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import java.util.HashMap;
 import java.util.Map;
+import com.squareup.picasso.Picasso;
+import com.he161696.kingbarber.CircleTransform;
 
 public class BarberHomeActivity extends AppCompatActivity {
 
@@ -108,6 +110,40 @@ public class BarberHomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Load barber profile and image
+        loadBarberProfile();
+    }
+
+    private void loadBarberProfile() {
+        String url = "http://10.0.2.2/api/get_barber_profile.php?barberId=" + barberId;
+        RequestQueue queue = Volley.newRequestQueue(this);
+        com.android.volley.toolbox.JsonObjectRequest request = new com.android.volley.toolbox.JsonObjectRequest(
+                Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        if (response.getBoolean("success")) {
+                            String imageUrl = response.optString("image", null);
+                            if (imageUrl != null && !imageUrl.isEmpty()) {
+                                Picasso.get()
+                                        .load(imageUrl)
+                                        .placeholder(R.drawable.ic_launcher_foreground)
+                                        .error(R.drawable.ic_launcher_foreground)
+                                        .transform(new CircleTransform())
+                                        .fit()
+                                        .centerCrop()
+                                        .into(imageBarber);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    // Có thể hiển thị ảnh mặc định nếu lỗi
+                }
+        );
+        queue.add(request);
     }
     
     private void showEditProfileDialog() {

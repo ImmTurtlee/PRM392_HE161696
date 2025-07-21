@@ -25,16 +25,24 @@
         android:textSize="24sp"
         android:fitsSystemWindows="true"
         android:textStyle="bold" />
-    <ImageView
-        android:id="@+id/image_barber"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:cardCornerRadius="80dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="@android:color/white"
         android:layout_gravity="center_horizontal"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_launcher_foreground"
-        android:background="@drawable/border_image"
-        android:padding="6dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/image_barber"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:padding="0dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"/>
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
